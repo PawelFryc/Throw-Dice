@@ -2,7 +2,7 @@ const diceDropdown = document.querySelector("#number-of-sides");
 const throwButton = document.querySelector(".throw-button");
 const modifierInput = document.querySelector("#modifier");
 const resultsList = document.querySelector(".wyniki");
-const clearButton = document.querySelector(".clear");
+const clearButton = document.querySelector(".clear-button");
 const customDiceInput = document.querySelector("#choose-dice");
 
 function addThrowResult(result, numberOfSides) {
@@ -12,11 +12,11 @@ function addThrowResult(result, numberOfSides) {
 }
 
 throwButton.addEventListener("click", function () {
-  // let numberOfSides = diceReference.value;
-  // if (diceReference.value === "custom") {
-  //   numberOfSides = customTypeReference.value;
+  // let numberOfSides = diceDropdown.value;
+  // if (diceDropdown.value === "custom") {
+  //   numberOfSides = customDiceInput.value;
   // }
-  //
+  
   const numberOfSides =
     diceDropdown.value === "custom"
       ? customDiceInput.value
@@ -25,7 +25,7 @@ throwButton.addEventListener("click", function () {
   const result = Math.ceil(Math.random() * numberOfSides);
   addThrowResult(result, numberOfSides);
   //Chujowy sposób
-  // resultsReference.innerHTML += `<li>${result}</li>`;
+  // resultsList.innerHTML += `<li>${result}</li>`;
 });
 
 clearButton.addEventListener("click", function () {
