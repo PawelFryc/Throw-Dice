@@ -12,16 +12,17 @@ function addThrowResult(result, numberOfSides) {
 }
 
 throwButton.addEventListener("click", function () {
+  //Else IF
   // let numberOfSides = diceDropdown.value;
   // if (diceDropdown.value === "custom") {
   //   numberOfSides = customDiceInput.value;
   // }
-  
+  //turnary operator
   const numberOfSides =
     diceDropdown.value === "custom"
       ? customDiceInput.value
       : diceDropdown.value;
-  //turnary operator
+
   const result = Math.ceil(Math.random() * numberOfSides);
   addThrowResult(result, numberOfSides);
   //Chujowy sposób

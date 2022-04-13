@@ -8,37 +8,44 @@
     <link rel="stylesheet" href="/styles.css" />
     <title>Throw Dice</title>
   </head>
-  <body>
-    <div class="menu">
-      <div class="dice-selector">
-        <label for="number-of-sides">Kość</label>
 
-        <select name="sides" id="number-of-sides">
-          <option value="4">k4</option>
-          <option value="6">k6</option>
-          <option value="8">k8</option>
-          <option value="10">k10</option>
-          <option value="20">k20</option>
-          <option value="100">k100</option>
-          <option value="custom">Własna</option>
-        </select>
+  <body>
+    <header>
+      <p>Ustawienia rzutu</p>
+      <p>Wyniki</p>
+    </header>
+    <div class="wrapper">
+      <div class="menu">
+        <div class="dice-selector">
+          <label for="number-of-sides">Kość</label>
+            <select name="sides" id="number-of-sides">
+            <option value="4">k4</option>
+            <option value="6">k6</option>
+            <option value="8">k8</option>
+            <option value="10">k10</option>
+            <option value="20">k20</option>
+            <option value="100">k100</option>
+            <option value="custom">Własna</option>
+          </select>
+        </div>
+        <div class="choose-dice">
+          <label for="choose-dice">Ilość Ścianek</label>
+          <input id="choose-dice" type="number" disabled />
+        </div>
+        <div class="modifier">
+          <label for="modifier">Modyfikator</label>
+          <input id="modifier" type="number" />
+        </div>
+        <div class="throw">
+          <button class="throw-button">Rzuć</button>
+        </div>
       </div>
-      <div class="choose-dice">
-        <label for="choose-dice">Ilość Ścianek</label>
-        <input id="choose-dice" type="number" disabled />
-      </div>
-      <div class="modifier">
-        <label for="modifier">Modyfikator</label>
-        <input id="modifier" type="number" />
-      </div>
-      <div class="throw">
-        <button class="throw-button">Rzuć</button>
+      <div class="tablica-wyników">
+        <ul class="wyniki"></ul>
+        <button class="clear-button">Wyczyść</button>
       </div>
     </div>
-    <div class="tablica-wyników">
-      <ul class="wyniki"></ul>
-      <button class="clear-button">Wyczyść</button>
-    </div>
+    
     
 
     <script src="/index.js"></script>
