@@ -10,7 +10,7 @@ body {
 header {
   display: flex;
   justify-content: flex-start;
-  grid-gap: 600px;
+  grid-gap: 520px;
   margin: 10px;
   padding-left: 10px;
   padding-top: 50px;
@@ -32,7 +32,11 @@ header {
   background: rgb(255, 255, 255);
 }
 .menu {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  align-content: start;
+  
+
   gap: 20px;
   margin: 10px;
   padding: 15px;

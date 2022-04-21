@@ -5,12 +5,19 @@ const resultsList = document.querySelector(".wyniki");
 const clearButton = document.querySelector(".clear-button");
 const customDiceInput = document.querySelector("#choose-dice");
 
+//Wyświetlanie wyników
 function addThrowResult(result, numberOfSides) {
   const element = document.createElement("li");
-  element.innerHTML = `k${numberOfSides} = ${result}`;
+  element.innerHTML = `k${numberOfSides} + ${modifierInput.value}  = ${result} `;
   resultsList.appendChild(element);
 }
 
+//Czyszczenie wyników rzutu
+clearButton.addEventListener("click", function () {
+  resultsList.innerHTML = "";
+});
+
+//Throw button
 throwButton.addEventListener("click", function () {
   //Else IF
   // let numberOfSides = diceDropdown.value;
@@ -18,28 +25,30 @@ throwButton.addEventListener("click", function () {
   //   numberOfSides = customDiceInput.value;
   // }
   //turnary operator
-  const numberOfSides =
+  let numberOfSides =
     diceDropdown.value === "custom"
       ? customDiceInput.value
       : diceDropdown.value;
+  //Zmiana stringu w cyfry (parsefloat dla ułamków)
+  numberOfSides = parseInt(numberOfSides);
 
-  const result = Math.ceil(Math.random() * numberOfSides);
+  const mod = parseInt(modifierInput.value);
+
+  const result = Math.ceil(Math.random() * numberOfSides) + mod;
   addThrowResult(result, numberOfSides);
   //Chujowy sposób
   // resultsList.innerHTML += `<li>${result}</li>`;
 });
 
-clearButton.addEventListener("click", function () {
-  resultsList.innerHTML = "";
-});
-
+//
 diceDropdown.addEventListener("change", function () {
-  // if (diceReference.value === "custom") {
-  //   customTypeReference.disabled = false;
+  // if (diceDropdown.value === "custom") {
+  //   customDiceInput.disabled = false;
   // }
   // else {
-  //   customTypeReference.disabled = true;
+  //   customDiceInput.disabled = true;
   // }
   // customTypeReference.disabled = !(diceReference.value === "custom");
   customDiceInput.disabled = diceDropdown.value !== "custom";
 });
+console.log(modifierInput.value);
