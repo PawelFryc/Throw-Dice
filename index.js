@@ -4,12 +4,21 @@ const modifierInput = document.querySelector("#modifier");
 const resultsList = document.querySelector(".wyniki");
 const clearButton = document.querySelector(".clear-button");
 const customDiceInput = document.querySelector("#choose-dice");
+const diceCount = document.querySelector("#dice-count");
 
 //Wyświetlanie wyników
-function addThrowResult(result, numberOfSides) {
+function addThrowResult(result, numberOfSides, mod) {
   const element = document.createElement("li");
-  element.innerHTML = `k${numberOfSides} + ${modifierInput.value}  = ${result} `;
+  const diceType = `k${numberOfSides}`;
+  const modSign = mod < 0 ? `-` : `+`;
+  const modInfo = mod === 0 ? "" : ` ${modSign} ${Math.abs(mod)}`;
+  const resultInfo = ` = ${result}`;
+  element.innerHTML = diceType + modInfo + resultInfo;
   resultsList.appendChild(element);
+}
+
+function throwDice(numberOfSides, mod) {
+  return Math.ceil(Math.random() * numberOfSides) + mod;
 }
 
 //Czyszczenie wyników rzutu
@@ -32,10 +41,10 @@ throwButton.addEventListener("click", function () {
   //Zmiana stringu w cyfry (parsefloat dla ułamków)
   numberOfSides = parseInt(numberOfSides);
 
-  const mod = parseInt(modifierInput.value);
-
+  const mod = modifierInput.value === "" ? 0 : parseInt(modifierInput.value);
   const result = Math.ceil(Math.random() * numberOfSides) + mod;
-  addThrowResult(result, numberOfSides);
+  addThrowResult(result, numberOfSides, mod);
+
   //Chujowy sposób
   // resultsList.innerHTML += `<li>${result}</li>`;
 });
@@ -51,4 +60,3 @@ diceDropdown.addEventListener("change", function () {
   // customTypeReference.disabled = !(diceReference.value === "custom");
   customDiceInput.disabled = diceDropdown.value !== "custom";
 });
-console.log(modifierInput.value);
