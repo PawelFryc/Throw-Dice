@@ -1,11 +1,20 @@
 const get = document.querySelector.bind(document);
-const diceDropdown = get("#number-of-sides");
+const diceDropdown = get(".number-of-sides");
 const throwButton = get(".throw-button");
-const modifierInput = get("#modifier");
+const modifierInput = get(".modifier");
 const resultsList = get(".wyniki");
 const clearButton = get(".clear-button");
-const customDiceInput = get("#choose-dice");
-const diceCount = get("#dice-count");
+const customDiceInput = get(".choose-dice");
+const diceCount = get(".dice-count");
+const addButton = get(".add-button");
+const throwTemplate = get("#throw-template");
+const throwsList = get(".throws-list");
+
+addButton.onclick = function () {
+  const newThrow = throwTemplate.cloneNode(true);
+  newThrow.id = "";
+  throwsList.appendChild(newThrow);
+};
 
 //Wyświetlanie wyników
 function addThrowResult(result, numberOfSides, mod) {

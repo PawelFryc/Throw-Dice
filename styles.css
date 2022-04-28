@@ -31,9 +31,9 @@ header {
   height: 300px;
   background: rgb(255, 255, 255);
 }
-.menu {
+.throw {
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: auto auto auto auto auto;
   align-content: start;
 
   gap: 20px;
