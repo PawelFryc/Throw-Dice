@@ -1,77 +1,90 @@
 const get = document.querySelector.bind(document);
-const diceDropdown = get(".number-of-sides");
-const throwButton = get(".throw-button");
-const modifierInput = get(".modifier");
-const resultsList = get(".wyniki");
-const clearButton = get(".clear-button");
-const customDiceInput = get(".choose-dice");
-const diceCount = get(".dice-count");
-const addButton = get(".add-button");
-const throwTemplate = get("#throw-template");
-const throwsList = get(".throws-list");
+const diceDropdown = get('.number-of-sides');
+const throwButton = get('.throw-button');
+const modifierInput = get('.modifier');
+const resultsList = get('.wyniki');
+const clearButton = get('.clear-button');
+const customDiceInput = get('.choose-dice');
+const diceCount = get('.dice-count');
+const addButton = get('.add-button');
+const throwTemplate = get('#throw-template');
+const throwsList = get('.throws-list');
 
 addButton.onclick = function () {
   const newThrow = throwTemplate.cloneNode(true);
-  newThrow.id = "";
+  newThrow.id = '';
   throwsList.appendChild(newThrow);
 };
 
+function getChildrenByClass(htmlElement, stringSelector) {
+  // zczytaj listę elementów html w throwsList
+  const nodesList = htmlElement.querySelectorAll(stringSelector);
+  // zamień upośledzoną listę elementów na legitny array
+  const elementsArray = Array.from(nodesList);
+
+  return elementsArray;
+}
+
 //Wyświetlanie wyników
-function addThrowResult(result, numberOfSides, mod) {
-  const element = document.createElement("li");
+function addThrowResult(result, numberOfSides, mod, diceCount) {
+  const element = document.createElement('li');
   const diceType = `k${numberOfSides}`;
   const modSign = mod < 0 ? `-` : `+`;
-  const modInfo = mod === 0 ? "" : ` ${modSign} ${Math.abs(mod)}`;
+  const modInfo = mod === 0 ? '' : ` ${modSign} ${Math.abs(mod)}`;
   const resultInfo = ` = ${result}`;
-  const ammontOfDice = diceCount.value === "1" ? "" : `${diceCount.value}`;
+  const ammontOfDice = diceCount === '1' ? '' : diceCount;
   element.innerHTML = ammontOfDice + diceType + modInfo + resultInfo;
   resultsList.appendChild(element);
 }
-//Funkcja rzutu
-function throwDice(numberOfSides, mod) {
-  return Math.ceil(Math.random() * numberOfSides) + mod;
-}
+
 //Czyszczenie wyników rzutu
-clearButton.addEventListener("click", function () {
-  resultsList.innerHTML = "";
+clearButton.addEventListener('click', function () {
+  resultsList.innerHTML = '';
 });
-diceCount.addEventListener("input", function (event) {
+
+// move it inside single doTheFuckingThrow
+diceCount.addEventListener('input', function (event) {
   if (parseInt(event.target.value) <= 0) {
     diceCount.value = 1;
   }
 });
 
-//Throw button
-throwButton.addEventListener("click", function () {
-  //Else IF
-  // let numberOfSides = diceDropdown.value;
-  // if (diceDropdown.value === "custom") {
-  //   numberOfSides = customDiceInput.value;
-  // }
-  //turnary operator
-  let numberOfSides =
-    diceDropdown.value === "custom"
-      ? customDiceInput.value
-      : diceDropdown.value;
+function doTheFuckingThrow(throwElement) {
+  // zbieramy wartości pól pojedynczego rzutu
+  let diceCountInput = throwElement.querySelector('.dice-count').value;
+  const numberOfSidesInput =
+    throwElement.querySelector('.number-of-sides').value;
+  const customDiceSidesInput = throwElement.querySelector('.choose-dice').value;
+  const modifierInput = throwElement.querySelector('.modifier').value;
 
-  //Zmiana stringu w cyfry (parsefloat dla ułamków)
-  numberOfSides = parseInt(numberOfSides);
+  // prettier-ignore
+  let sides = numberOfSidesInput === 'custom'
+    ? customDiceSidesInput
+    : numberOfSidesInput;
 
-  const modifier =
-    modifierInput.value === "" ? 0 : parseInt(modifierInput.value);
-  // const result = Math.ceil(Math.random() * numberOfSides) + modifier;
+  sides = parseInt(sides);
+
+  const modifier = modifierInput === '' ? 0 : parseInt(modifierInput);
+
   let result = modifier;
-  for (let i = 0; i < diceCount.value; i++) {
-    result += Math.ceil(Math.random() * numberOfSides);
+  // dodaj do wyniku tyle rzutów kości ile jest diceCount
+  for (let i = 0; i < diceCountInput; i++) {
+    result += Math.ceil(Math.random() * sides);
   }
-  addThrowResult(result, numberOfSides, modifier);
 
+  addThrowResult(result, sides, modifier, diceCountInput);
   //Chujowy sposób
   // resultsList.innerHTML += `<li>${result}</li>`;
+}
+
+//Throw button
+throwButton.addEventListener('click', function () {
+  const throws = getChildrenByClass(throwsList, '.throw');
+  throws.forEach(doTheFuckingThrow);
 });
 
 //
-diceDropdown.addEventListener("change", function () {
+diceDropdown.addEventListener('change', function () {
   // if (diceDropdown.value === "custom") {
   //   customDiceInput.disabled = false;
   // }
@@ -79,5 +92,5 @@ diceDropdown.addEventListener("change", function () {
   //   customDiceInput.disabled = true;
   // }
   // customTypeReference.disabled = !(diceReference.value === "custom");
-  customDiceInput.disabled = diceDropdown.value !== "custom";
+  customDiceInput.disabled = diceDropdown.value !== 'custom';
 });
