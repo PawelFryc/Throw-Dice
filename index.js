@@ -1,7 +1,5 @@
 const get = document.querySelector.bind(document);
 
-
-
 function addWiersz() {
   const throwTemplate = get("#throw-template");
   const newThrow = throwTemplate.cloneNode(true);
@@ -21,6 +19,10 @@ function addWiersz() {
     if (parseInt(event.target.value) <= 0) {
       diceCountInput.value = 1;
     }
+  });
+  const removeButton = newThrow.querySelector(".remove-button");
+  removeButton.addEventListener("click", function () {
+    newThrow.parentNode.removeChild(newThrow);
   });
 }
 
@@ -46,8 +48,6 @@ function addThrowResult(result, numberOfSides, mod, diceCount) {
   const resultsList = get(".wyniki");
   resultsList.appendChild(element);
 }
-
-
 
 function doTheFuckingThrow(throwElement) {
   // zbieramy wartości pól pojedynczego rzutu
@@ -83,7 +83,7 @@ window.addEventListener("load", function () {
   const throwButton = get(".throw-button");
   const clearButton = get(".clear-button");
   const addButton = get(".add-button");
-  
+
   throwButton.addEventListener("click", function () {
     const throwsList = get(".throws-list");
     const throws = getChildrenByClass(throwsList, ".throw");
