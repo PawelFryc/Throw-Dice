@@ -1,20 +1,28 @@
 const get = document.querySelector.bind(document);
-const diceDropdown = get('.number-of-sides');
-const throwButton = get('.throw-button');
-const modifierInput = get('.modifier');
-const resultsList = get('.wyniki');
-const clearButton = get('.clear-button');
-const customDiceInput = get('.choose-dice');
-const diceCount = get('.dice-count');
-const addButton = get('.add-button');
-const throwTemplate = get('#throw-template');
-const throwsList = get('.throws-list');
 
-addButton.onclick = function () {
+
+
+function addWiersz() {
+  const throwTemplate = get("#throw-template");
   const newThrow = throwTemplate.cloneNode(true);
-  newThrow.id = '';
+  newThrow.id = "";
+
+  const throwsList = get(".throws-list");
   throwsList.appendChild(newThrow);
-};
+
+  const customDiceInput = newThrow.querySelector(".choose-dice");
+  const diceDropdownInput = newThrow.querySelector(".number-of-sides");
+  const diceCountInput = newThrow.querySelector(".dice-count");
+
+  diceDropdownInput.addEventListener("change", function () {
+    customDiceInput.disabled = diceDropdownInput.value !== "custom";
+  });
+  diceCountInput.addEventListener("input", function (event) {
+    if (parseInt(event.target.value) <= 0) {
+      diceCountInput.value = 1;
+    }
+  });
+}
 
 function getChildrenByClass(htmlElement, stringSelector) {
   // zczytaj listę elementów html w throwsList
@@ -27,35 +35,27 @@ function getChildrenByClass(htmlElement, stringSelector) {
 
 //Wyświetlanie wyników
 function addThrowResult(result, numberOfSides, mod, diceCount) {
-  const element = document.createElement('li');
+  const element = document.createElement("li");
   const diceType = `k${numberOfSides}`;
   const modSign = mod < 0 ? `-` : `+`;
-  const modInfo = mod === 0 ? '' : ` ${modSign} ${Math.abs(mod)}`;
+  const modInfo = mod === 0 ? "" : ` ${modSign} ${Math.abs(mod)}`;
   const resultInfo = ` = ${result}`;
-  const ammontOfDice = diceCount === '1' ? '' : diceCount;
+  const ammontOfDice = diceCount === "1" ? "" : diceCount;
   element.innerHTML = ammontOfDice + diceType + modInfo + resultInfo;
+
+  const resultsList = get(".wyniki");
   resultsList.appendChild(element);
 }
 
-//Czyszczenie wyników rzutu
-clearButton.addEventListener('click', function () {
-  resultsList.innerHTML = '';
-});
 
-// move it inside single doTheFuckingThrow
-diceCount.addEventListener('input', function (event) {
-  if (parseInt(event.target.value) <= 0) {
-    diceCount.value = 1;
-  }
-});
 
 function doTheFuckingThrow(throwElement) {
   // zbieramy wartości pól pojedynczego rzutu
-  let diceCountInput = throwElement.querySelector('.dice-count').value;
+  let diceCountInput = throwElement.querySelector(".dice-count").value;
   const numberOfSidesInput =
-    throwElement.querySelector('.number-of-sides').value;
-  const customDiceSidesInput = throwElement.querySelector('.choose-dice').value;
-  const modifierInput = throwElement.querySelector('.modifier').value;
+    throwElement.querySelector(".number-of-sides").value;
+  const customDiceSidesInput = throwElement.querySelector(".choose-dice").value;
+  const modifierInput = throwElement.querySelector(".modifier").value;
 
   // prettier-ignore
   let sides = numberOfSidesInput === 'custom'
@@ -64,7 +64,7 @@ function doTheFuckingThrow(throwElement) {
 
   sides = parseInt(sides);
 
-  const modifier = modifierInput === '' ? 0 : parseInt(modifierInput);
+  const modifier = modifierInput === "" ? 0 : parseInt(modifierInput);
 
   let result = modifier;
   // dodaj do wyniku tyle rzutów kości ile jest diceCount
@@ -78,19 +78,25 @@ function doTheFuckingThrow(throwElement) {
 }
 
 //Throw button
-throwButton.addEventListener('click', function () {
-  const throws = getChildrenByClass(throwsList, '.throw');
-  throws.forEach(doTheFuckingThrow);
-});
 
-//
-diceDropdown.addEventListener('change', function () {
-  // if (diceDropdown.value === "custom") {
-  //   customDiceInput.disabled = false;
-  // }
-  // else {
-  //   customDiceInput.disabled = true;
-  // }
-  // customTypeReference.disabled = !(diceReference.value === "custom");
-  customDiceInput.disabled = diceDropdown.value !== 'custom';
+window.addEventListener("load", function () {
+  const throwButton = get(".throw-button");
+  const clearButton = get(".clear-button");
+  const addButton = get(".add-button");
+  
+  throwButton.addEventListener("click", function () {
+    const throwsList = get(".throws-list");
+    const throws = getChildrenByClass(throwsList, ".throw");
+    throws.forEach(doTheFuckingThrow);
+  });
+
+  clearButton.addEventListener("click", function () {
+    const resultsList = get(".wyniki");
+    resultsList.innerHTML = "";
+  });
+
+  addButton.onclick = addWiersz;
+
+  addWiersz();
 });
+//

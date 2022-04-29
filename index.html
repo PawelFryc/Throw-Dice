@@ -26,35 +26,7 @@
           <div>Modyfikator</div>
         </div>
 
-        <div class="throws-list">
-          <div class="throw" id="throw-template">
-            <div>
-              <input class="dice-count" type="number" value="1" />
-            </div>
-
-            <div>
-              <select name="sides" class="number-of-sides">
-                <option value="4">k4</option>
-                <option value="6">k6</option>
-                <option value="8">k8</option>
-                <option value="10">k10</option>
-                <option value="20">k20</option>
-                <option value="100">k100</option>
-                <option value="custom">Własna</option>
-              </select>
-            </div>
-
-            <div>
-              <input class="choose-dice" type="number" disabled />
-            </div>
-
-            <div>
-              <input class="modifier" type="number" value="0" />
-            </div>
-
-            <button class="minus-button">-</button>
-          </div>
-        </div>
+        <div class="throws-list"></div>
 
         <div class="throw">
           <button class="throw-button">Rzuć</button>
@@ -67,6 +39,34 @@
       </div>
     </div>
 
+    <div class="throw" id="throw-template">
+      <div>
+        <input class="dice-count" type="number" value="1" />
+      </div>
+
+      <div>
+        <select name="sides" class="number-of-sides">
+          <option value="4">k4</option>
+          <option value="6">k6</option>
+          <option value="8">k8</option>
+          <option value="10">k10</option>
+          <option value="20">k20</option>
+          <option value="100">k100</option>
+          <option value="custom">Własna</option>
+        </select>
+      </div>
+
+      <div>
+        <input class="choose-dice" type="number" disabled />
+      </div>
+
+      <div>
+        <input class="modifier" type="number" value="0" />
+      </div>
+
+      <button class="minus-button">-</button>
+    </div>
+    
     <script src="/index.js"></script>
   </body>
 </html>
