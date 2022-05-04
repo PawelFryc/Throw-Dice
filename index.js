@@ -36,7 +36,7 @@ function getChildrenByClass(htmlElement, stringSelector) {
 }
 
 //Wyświetlanie wyników
-function addThrowResult(result, numberOfSides, mod, diceCount) {
+function displaySingleThrowResult(result, numberOfSides, mod, diceCount) {
   const element = document.createElement("li");
   const diceType = `k${numberOfSides}`;
   const modSign = mod < 0 ? `-` : `+`;
@@ -45,6 +45,15 @@ function addThrowResult(result, numberOfSides, mod, diceCount) {
   const ammontOfDice = diceCount === "1" ? "" : diceCount;
   element.innerHTML = ammontOfDice + diceType + modInfo + resultInfo;
 
+  const resultsList = get(".wyniki");
+  resultsList.appendChild(element);
+}
+
+//Wyświetlanie wyników
+function displayThrowsSum(sum) {
+  const element = document.createElement("li");
+  element.className = "throw-space";
+  element.innerHTML = `Sum: ${sum}`;
   const resultsList = get(".wyniki");
   resultsList.appendChild(element);
 }
@@ -72,9 +81,10 @@ function doTheFuckingThrow(throwElement) {
     result += Math.ceil(Math.random() * sides);
   }
 
-  addThrowResult(result, sides, modifier, diceCountInput);
+  displaySingleThrowResult(result, sides, modifier, diceCountInput);
   //Chujowy sposób
   // resultsList.innerHTML += `<li>${result}</li>`;
+  return result;
 }
 
 //Throw button
@@ -87,7 +97,11 @@ window.addEventListener("load", function () {
   throwButton.addEventListener("click", function () {
     const throwsList = get(".throws-list");
     const throws = getChildrenByClass(throwsList, ".throw");
-    throws.forEach(doTheFuckingThrow);
+    let resultsSum = 0;
+    throws.forEach(function (element) {
+      resultsSum += doTheFuckingThrow(element);
+    });
+    displayThrowsSum(resultsSum);
   });
 
   clearButton.addEventListener("click", function () {
