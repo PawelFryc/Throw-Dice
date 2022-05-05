@@ -34,18 +34,10 @@ header {
 .throw {
   display: grid;
   grid-template-columns: auto auto auto auto auto;
-  align-content: start;
-
+  align-content: center;
   gap: 20px;
   margin: 10px;
   padding: 15px;
-}
-
-.throw-button {
-  color: rgb(255, 255, 255);
-  background-color: rgb(38, 35, 32);
-  padding: 5px;
-  border: 2px solid rgb(38, 35, 32);
 }
 
 .clear-button {
@@ -62,4 +54,22 @@ header {
 
 .throw-space {
   margin-bottom: 1rem;
+}
+.add-button {
+  background:rgb(38, 35, 32);
+  color: rgb(255, 255, 255);
+  border: 1px solid black;
+  
+}
+
+.remove-button {
+  background:rgb(38, 35, 32);
+  color: rgb(255, 255, 255);
+  border: 1px solid black;
+}
+
+.throw-button {
+  background:rgb(38, 35, 32);
+  color: rgb(255, 255, 255);
+  border: 1px solid black;
 }
